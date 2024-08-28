@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Console\Command;
 
@@ -26,7 +27,7 @@ class Settlments extends Command
      */
     public function handle()
     {
-        $role = Role::first();
-        dd($role->permissions);
+        $permission = Permission::first();
+        dd($permission->roles);
     }
 }

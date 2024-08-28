@@ -18,7 +18,7 @@ class PermissionResource extends Resource
 {
     protected static ?string $model = Permission::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-lock-open';
 
     public static function form(Form $form): Form
     {
@@ -33,7 +33,7 @@ class PermissionResource extends Resource
                     ->multiple()
                     ->options(Role::all()->pluck('name', 'id')->toArray())
                     ->searchable()
-                    ->preload(10)
+                    ->preload()
                     ->relationship('roles', 'name')
             ]);
     }

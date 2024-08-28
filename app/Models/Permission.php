@@ -11,9 +11,4 @@ class Permission extends ModelsPermission
 {
     use HasFactory, UuidTrait;
     protected $primaryKey = 'id';
-
-
-
-
-    
 }
