@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
+use App\Filament\Resources\RoleResource\Pages;
+use App\Filament\Resources\RoleResource\RelationManagers;
+use App\Models\Permission;
 use App\Models\Role;
-use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,9 +14,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class UserResource extends Resource
+class RoleResource extends Resource
 {
-    protected static ?string $model = User::class;
+    protected static ?string $model = Role::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -25,25 +25,21 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name'),
-                Forms\Components\TextInput::make('email'),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required()
-                    ->minLength(8) // Optional: Set minimum length
-                    ->maxLength(255),
-                Forms\Components\Select::make('roles')
-                    ->label('Roles')
-                    ->multiple()
-                    ->options(Role::all()->pluck('name', 'id')->toArray())
-                    ->searchable()
-                    ->required()
-                    ->relationship('roles', 'name'),
+                Forms\Components\TextInput::make('guard_name')
+                    ->default('web') // Optional: set a default value
+                    ->hidden(),
                 Forms\Components\Select::make('status')
                     ->options([
-                        STATUS_ACTIVE => 'Active',
-                        STATUS_INACTIVE => 'Inactive',
-                    ])
-                    ->required(),
+                        (string)STATUS_ACTIVE => 'Active',
+                        (string)STATUS_INACTIVE => 'Inactive',
+                    ]),
+                Forms\Components\Select::make('permissions')
+                    ->label('Permissions')
+                    ->multiple()
+                    ->options(Permission::all()->pluck('name', 'id')->toArray())
+                    ->searchable()
+                    ->preload(10)
+                    ->relationship('permissions', 'name')
             ]);
     }
 
@@ -52,15 +48,14 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('email'),
-
+                Tables\Columns\TextColumn::make('guard_name'),
                 Tables\Columns\TextColumn::make('status')
                     ->formatStateUsing(function ($state) {
                         return match ($state) {
                             (string)STATUS_ACTIVE => 'Active',
                             (string)STATUS_INACTIVE => 'Inactive'
                         };
-                    }),
+                    })
             ])
             ->filters([
                 //
@@ -85,9 +80,9 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => Pages\ListRoles::route('/'),
+            'create' => Pages\CreateRole::route('/create'),
+            'edit' => Pages\EditRole::route('/{record}/edit'),
         ];
     }
 }

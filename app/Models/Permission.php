@@ -5,11 +5,15 @@ namespace App\Models;
 use App\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Permission\Models\Role as ModelsRole;
+use Spatie\Permission\Models\Permission as ModelsPermission;
 
-class Role extends ModelsRole
+class Permission extends ModelsPermission
 {
     use HasFactory, UuidTrait;
     protected $primaryKey = 'id';
-    protected $guarded = ["id"];
+
+
+
+
+    
 }
