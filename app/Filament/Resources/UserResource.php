@@ -28,9 +28,9 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('email'),
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->required()
+                    ->required(fn($context) => $context === 'create')
                     ->minLength(8) // Optional: Set minimum length
-                    ->maxLength(255),
+                    ->maxLength(30),
                 Forms\Components\Select::make('roles')
                     ->label('Roles')
                     ->multiple()
@@ -51,10 +51,16 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('email'),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable()
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('status')
+                    ->searchable()
+                    ->sortable()
                     ->formatStateUsing(function ($state) {
                         return match ($state) {
                             (string)STATUS_ACTIVE => 'Active',

@@ -47,9 +47,15 @@ class RoleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('guard_name'),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('guard_name')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->searchable()
+                    ->sortable()
                     ->formatStateUsing(function ($state) {
                         return match ($state) {
                             (string)STATUS_ACTIVE => 'Active',
