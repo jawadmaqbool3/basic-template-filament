@@ -8,12 +8,18 @@ use Illuminate\Auth\Access\Response;
 
 class PermissionPolicy
 {
+    public  $permissions = [
+        'show_permissions' => 'show permissions',
+        'create_permissions' => 'create permissions',
+        'edit_permissions' => 'edit permissions',
+        'delete_permissions' => 'delete permissions',
+    ];
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('show permissions');
+        return $user->can($this->permissions["show_permissions"]);
         return true;
     }
 
@@ -22,7 +28,7 @@ class PermissionPolicy
      */
     public function view(User $user, Permission $permission): bool
     {
-        return $user->can('show permissions');
+        return $user->can($this->permissions["show_permissions"]);
         return true;
     }
 
@@ -31,7 +37,7 @@ class PermissionPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create permissions');
+        return $user->can($this->permissions["create_permissions"]);
         return true;
     }
 
@@ -40,7 +46,7 @@ class PermissionPolicy
      */
     public function update(User $user, Permission $permission): bool
     {
-        return $user->can('edit permissions');
+        return $user->can($this->permissions["edit_permissions"]);
         return true;
     }
 
@@ -49,7 +55,7 @@ class PermissionPolicy
      */
     public function delete(User $user, Permission $permission): bool
     {
-        return $user->can('delete permissions');
+        return $user->can($this->permissions["delete_permissions"]);
         return true;
     }
 
@@ -58,7 +64,7 @@ class PermissionPolicy
      */
     public function restore(User $user, Permission $permission): bool
     {
-        return $user->can('delete permissions');
+        return $user->can($this->permissions["delete_permissions"]);
         return true;
     }
 
@@ -67,7 +73,7 @@ class PermissionPolicy
      */
     public function forceDelete(User $user, Permission $permission): bool
     {
-        return $user->can('show permissions');
+        return $user->can($this->permissions["delete_permissions"]);
         return true;
     }
 }

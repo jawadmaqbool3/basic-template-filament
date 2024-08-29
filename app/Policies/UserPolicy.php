@@ -7,12 +7,18 @@ use Illuminate\Auth\Access\Response;
 
 class UserPolicy
 {
+    public  $permissions = [
+        'show_users' => 'show users',
+        'create_users' => 'create users',
+        'edit_users' => 'edit users',
+        'delete_users' => 'delete users',
+    ];
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('show users');
+        return $user->can($this->permissions["show_users"]);
         return true;
     }
 
@@ -21,7 +27,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        return $user->can('show users');
+        return $user->can($this->permissions["show_users"]);
         return true;
     }
 
@@ -30,7 +36,7 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create users');
+        return $user->can($this->permissions["create_users"]);
         return true;
     }
 
@@ -39,7 +45,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $user->can('edit users');
+        return $user->can($this->permissions["edit_users"]);
         return true;
     }
 
@@ -48,7 +54,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return $user->can('delete users');
+        return $user->can($this->permissions["delete_users"]);
         return true;
     }
 
@@ -57,7 +63,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model): bool
     {
-        return $user->can('delete users');
+        return $user->can($this->permissions["delete_users"]);
         return true;
     }
 
@@ -66,7 +72,7 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model): bool
     {
-        return $user->can('delete users');
+        return $user->can($this->permissions["delete_users"]);
         return true;
     }
 }

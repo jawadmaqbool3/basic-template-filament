@@ -8,12 +8,18 @@ use Illuminate\Auth\Access\Response;
 
 class RolePolicy
 {
+    public  $permissions = [
+        'show_roles' => 'show roles',
+        'create_roles' => 'create roles',
+        'edit_roles' => 'edit roles',
+        'delete_roles' => 'delete roles',
+    ];
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('show roles');
+        return $user->can($this->permissions["show_roles"]);
         return true;
     }
 
@@ -22,7 +28,7 @@ class RolePolicy
      */
     public function view(User $user, Role $role): bool
     {
-        return $user->can('show roles');
+        return $user->can($this->permissions["show_roles"]);
         return true;
         //
     }
@@ -32,7 +38,7 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create roles');
+        return $user->can($this->permissions["create_roles"]);
         return true;
         //
     }
@@ -42,7 +48,7 @@ class RolePolicy
      */
     public function update(User $user, Role $role): bool
     {
-        return $user->can('edit roles');
+        return $user->can($this->permissions["edit_roles"]);
         return true;
         //
     }
@@ -52,7 +58,7 @@ class RolePolicy
      */
     public function delete(User $user, Role $role): bool
     {
-        return $user->can('delete roles');
+        return $user->can($this->permissions["delete_roles"]);
         return true;
         //
     }
@@ -62,7 +68,7 @@ class RolePolicy
      */
     public function restore(User $user, Role $role): bool
     {
-        return $user->can('delete roles');
+        return $user->can($this->permissions["delete_roles"]);
         return true;
         //
     }
@@ -72,7 +78,7 @@ class RolePolicy
      */
     public function forceDelete(User $user, Role $role): bool
     {
-        return $user->can('delete roles');
+        return $user->can($this->permissions["delete_roles"]);
         return true;
         //
     }
