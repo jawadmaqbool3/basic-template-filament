@@ -41,8 +41,9 @@ class UserResource extends Resource
                 Forms\Components\Select::make('status')
                     ->options([
                         STATUS_ACTIVE => 'Active',
-                        STATUS_INACTIVE => 'Inactive',
+                        STATUS_INACTIVE => 'Inactive'
                     ])
+                    ->default((string)STATUS_ACTIVE)
                     ->required(),
             ]);
     }
