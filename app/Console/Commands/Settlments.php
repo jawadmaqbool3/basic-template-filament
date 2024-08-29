@@ -27,7 +27,7 @@ class Settlments extends Command
      */
     public function handle()
     {
-        $permission = Permission::first();
-        dd($permission->roles);
+        $role = Role::first();
+        dd(getModelForGuard('web'));
     }
 }

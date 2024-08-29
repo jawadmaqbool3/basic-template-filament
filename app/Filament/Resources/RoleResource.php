@@ -33,7 +33,6 @@ class RoleResource extends Resource
                         (string)STATUS_ACTIVE => 'Active',
                         (string)STATUS_INACTIVE => 'Inactive'
                     ])
-                    ->disablePlaceholder() 
                     ->default((string)STATUS_ACTIVE)
                     ->required(),
                 Forms\Components\Select::make('permissions')

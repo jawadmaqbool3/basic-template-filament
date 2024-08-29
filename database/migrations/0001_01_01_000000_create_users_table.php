@@ -20,7 +20,14 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
+            $table->uuid('company_id')->nullable();
+            $table->foreign("company_id")
+                ->references("id")
+                ->on("companies")
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+            $table->string('profile_photo_path', 2048)
+                ->nullable();
             $table->enum('status', [
                 STATUS_ACTIVE,
                 STATUS_INACTIVE

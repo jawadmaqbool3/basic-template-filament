@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CompanyResource\Pages;
 use App\Filament\Resources\CompanyResource\RelationManagers;
 use App\Models\Company;
+use App\Models\Permission;
+use App\Models\Role;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -32,7 +34,21 @@ class CompanyResource extends Resource
                         STATUS_PAYMENT_PENDING => 'Payment Pending',
                     ])
                     ->default((string)STATUS_ACTIVE)
-                    ->required()
+                    ->required(),
+                Forms\Components\Select::make('permissions')
+                    ->label('Permissions')
+                    ->multiple()
+                    ->options(Permission::all()->pluck('name', 'id')->toArray())
+                    ->searchable()
+                    ->preload(10)
+                    ->relationship('permissions', 'name'),
+                Forms\Components\Select::make('roles')
+                    ->label('Roles')
+                    ->multiple()
+                    ->options(Role::all()->pluck('name', 'id')->toArray())
+                    ->searchable()
+                    ->preload(10)
+                    ->relationship('roles', 'name')
 
             ]);
     }

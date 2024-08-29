@@ -26,6 +26,12 @@ class EditUser extends EditRecord
             unset($data['password']); // Remove password field if it's empty during update
         }
 
+        if (!empty($data['company'])) {
+            $data['company_id'] = $data["company"];
+        }
+
+
+
         return $data;
     }
 }
